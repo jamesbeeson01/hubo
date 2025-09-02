@@ -2,11 +2,40 @@
 <html>
   <head>
     <meta charset="UTF-8" />
-    <title>Hello World!</title>
+    <title>Hubo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa:300&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0&icon_names=tab_inactive" /> -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
     <link rel="stylesheet" href="index.css" />
   </head>
   <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <div id="home" class="panel">
+      <div id="header" class="fade">
+        <!-- <span class="material-symbols-outlined">shadow</span>
+        <span class="material-symbols-outlined">crop_square</span>
+        <span class="material-symbols-outlined">filter_none</span>
+        <span class="material-symbols-outlined">auto_awesome_motion</span> -->
+        <span id="close-btn" class="material-symbols-outlined">cancel</span>
+        <span id="all-apps-btn" class="material-symbols-outlined">tab_inactive</span>
+        <!-- <span class="material-icons">cancel</span> -->
+      </div>
+      <div id="main">
+        <h1>Hubo</h1>
+        <p>Welcome to your Electron application.</p>
+        <input type="text" id="omnibox" name="omnibox" value="Search or Chat...">
+      </div>
+    </div>
+    <div class="shadow fade">Down arrow icon</div>
+    <div id="small-droor" class="panel">
+      <!-- significant top padding or align to bottom -->
+      <!-- four apps in a row -->
+      Four apps
+    </div>
+    <div class="shadow fade">More...</div>
+    <div id="all-apps" class="panel">
+      All the apps, show on top
+    </div>
+    <script src="render.js"></script>
   </body>
 </html>
