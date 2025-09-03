@@ -1,8 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     const closebtn = document.getElementById('close-btn');
+    const belowmain = document.getElementById('below-main');
     const smallshadow = document.getElementById('small-drawer-shadow-btn');
     const smalldrawer = document.getElementById('small-drawer');
     const allshadow = document.getElementById('all-apps-shadow-btn');
+    const allbtn = document.getElementById('all-apps-btn');
     const allapps = document.getElementById('all-apps');
 
     closebtn.addEventListener('click', () => {
@@ -17,18 +19,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { once: true });
     });
 
+    belowmain.addEventListener('mouseleave', () => {
+        smallshadow.style.display = 'block';
+        smalldrawer.style.display = 'none';
+        allshadow.style.display = 'none';
+    });
+
     smallshadow.addEventListener('click', () => {
-        smalldrawer.style.display = 'block';
         smallshadow.style.display = 'none';
+        smalldrawer.style.display = 'block';
         allshadow.style.display = 'block';
     });
 
     allshadow.addEventListener('click', () => {
-        allshadow.style.display = 'none';
-        allapps.style.display = 'block';
-        allapps.style.position = 'fixed';
         smallshadow.style.display = 'block';
         smalldrawer.style.display = 'none';
+        allshadow.style.display = 'none';
+        allapps.style.display = 'block';
     });
 
+    allapps.addEventListener('mouseleave', () => {
+        allapps.style.display = 'none';
+    });
+
+    allbtn.addEventListener('click', () => {
+        allapps.style.display = 'block';
+    });
 });

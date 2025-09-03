@@ -4,6 +4,8 @@
   --secondary-color: gray;
   --tertiary-color: #13577c;
   --highlight-color: #073763;
+
+  --panel-padding: 1.5rem;
 }
 
 body {
@@ -20,7 +22,7 @@ body {
 #home {
   display: flex;
   flex-direction: column;
-  padding: 1.5rem;
+  /* padding: 1.5rem; */
   /* text-align: center; */
   background-color: var(--primary-color);
 }
@@ -34,6 +36,17 @@ body {
   flex-direction: row-reverse;
 }
 
+#hubo {
+  margin: 2.5rem;
+}
+
+#omnibox-buttons {
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  padding: 0;
+}
+
 #omnibox {
   font-family: 'Comfortaa', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
     Arial, sans-serif;
@@ -44,6 +57,10 @@ body {
   background: transparent;
 }
 
+#below-main {
+  display: contents;
+}
+
 #small-drawer-shadow-btn {
   transform: translateZ(-2px);
 }
@@ -52,6 +69,8 @@ body {
   display: none;
   background-color: var(--secondary-color);
   transform: translateZ(-1px);
+  padding-top: calc(var(--panel-padding) + 5rem);
+  margin-top: -5rem;
 }
 
 #all-apps-shadow-btn {
@@ -61,6 +80,7 @@ body {
 
 #all-apps {
   display: none;
+  position: fixed;
   background-color: var(--tertiary-color);
   top: 0;
   left: 0;
@@ -72,11 +92,14 @@ body {
 
 .panel {
   border-radius: 45px;
+  padding: var(--panel-padding);
 }
 
 .shadow {
   background: linear-gradient(to bottom, var(--secondary-color), rgba(255, 255, 255, 0) 100%);
   padding: 2rem;
+  padding-top: 3.5rem;
+  margin-top: -2.5rem;
 }
 
 .fade {
@@ -89,7 +112,7 @@ body {
   transition: opacity 0.3s;
 }
 
-.behind-previous {
-  padding-top: 2.2rem;
-  margin-top: -2.2rem;
-}
+/* .behind-previous {
+  padding-top: calc(var(--panel-padding) + 1rem);
+  margin-top: -1rem;
+} */
