@@ -36,8 +36,6 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  app.on
-
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
   app.on('activate', () => {
@@ -58,3 +56,7 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+ipcMain.handle('update-search', (event, text) => {
+  console.log(text.length);
+  return text.length;
+});

@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const omnibox = document.getElementById('omnibox');
     const closebtn = document.getElementById('close-btn');
     const belowmain = document.getElementById('below-main');
     const smallshadow = document.getElementById('small-drawer-shadow-btn');
@@ -6,6 +7,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const allshadow = document.getElementById('all-apps-shadow-btn');
     const allbtn = document.getElementById('all-apps-btn');
     const allapps = document.getElementById('all-apps');
+
+    omnibox.addEventListener('input', async () => {
+        const len = await window.preload.updateSearch(omnibox.value);
+        console.log(len);
+    });
 
     closebtn.addEventListener('click', () => {
         // fade out

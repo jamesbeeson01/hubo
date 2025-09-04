@@ -3,7 +3,8 @@
 const { contextBridge, ipcRenderer } = require("electron");
 
 const API = {
-  closeWindow: () => ipcRenderer.invoke('close-window')
+  closeWindow: () => ipcRenderer.invoke('close-window'),
+  updateSearch: (text) => ipcRenderer.invoke('update-search', text)
 }
 
 contextBridge.exposeInMainWorld('preload', API);
