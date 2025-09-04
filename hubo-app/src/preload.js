@@ -4,8 +4,10 @@ const { contextBridge, ipcRenderer } = require("electron");
 
 const API = {
   closeWindow: () => ipcRenderer.invoke('close-window'),
-  updateSearch: (text) => ipcRenderer.invoke('update-search', text),
-  appTrigger: (id) => ipcRenderer.invoke('app-trigger', id)
+  getApps: () => ipcRenderer.invoke('get-apps'),
+  getDrawerApps: () => ipcRenderer.invoke('get-drawer-apps'),
+  appTrigger: (id) => ipcRenderer.invoke('app-trigger', id),
+  updateSearch: (text) => ipcRenderer.invoke('update-search', text)
 }
 
 contextBridge.exposeInMainWorld('preload', API);

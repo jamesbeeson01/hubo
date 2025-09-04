@@ -83,6 +83,24 @@ ipcMain.handle('update-search', (event, text) => {
   }
 });
 
+ipcMain.handle('get-apps', () => {
+  return appRegistry.map(app => ({
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      icon: app.icon
+    }));
+});
+
+ipcMain.handle('get-drawer-apps', () => {
+  return appRegistry.slice(0, 4).map(app => ({
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      icon: app.icon
+    }));
+});
+
 ipcMain.handle('app-trigger', (event, id) => {
   const app = appRegistry.find(app => app.id === id);
   if (app) {

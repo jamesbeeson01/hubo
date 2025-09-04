@@ -13,7 +13,12 @@ Personal hub home for connecting personalized desktop apps and features
         - [x] Make the count read in the index of app registry
         - [x] Make entries a button that performs the action
     - [x] Implement UI (populating beneath omnibox)
-    - [ ] Implement app cards (with a default if no icon)
+    - [x] Style app cards (with a default if no icon)
+    - [ ] Place app cards in drawer
+    - [ ] Place app cards in all-apps
+    - [ ] Dynamically add app cards
+        - [ ] getApps that accepts indices
+    - [ ] Click triggers action
 - [ ] Add help-info window
 - [ ] Shortcuts (defined in ui-ux doc)
 - [ ] Style elements

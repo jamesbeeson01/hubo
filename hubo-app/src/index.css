@@ -83,6 +83,8 @@ body {
 
 #small-drawer {
   display: none;
+  flex-direction: row;
+  justify-content: space-between;
   background-color: var(--secondary-color);
   transform: translateZ(-1px);
   padding-top: calc(var(--panel-padding) + 5rem);
@@ -101,9 +103,20 @@ body {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
+  height: 22rem;
   
   /* transform: translateZ(100px); */
+}
+
+.app {
+  height: 50px;
+  width: 50px;
+  background-color: var(--highlight-color);
+  border-radius: 15px;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .panel {

@@ -8,6 +8,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const allshadow = document.getElementById('all-apps-shadow-btn');
     const allbtn = document.getElementById('all-apps-btn');
     const allapps = document.getElementById('all-apps');
+
+    // phase 1
+    smalldrawer.innerHTML = '<div class="app"><p>A</p></div>'.repeat(4);
+    // phase 2
+    // const drawerapps = await window.preload.getApps();
+    // smalldrawer.innerHTML = '<div class="app"><p>A</p></div>'.repeat(apps.length);
+    // phase 3
+    // const drawerapps = window.preload.getApps();
+    // smalldrawer.innerHTML = '';
+    // drawerapps.forEach(app => {
+    //     smalldrawer.innerHTML += `<div id="${app.id}" class="app">${app.name[0]}</div>`
+    // });
     
     resultscontainer.addEventListener('click', (event) => {
         if (event.target.classList.contains('result')) {
@@ -49,7 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     smallshadow.addEventListener('click', () => {
         smallshadow.style.display = 'none';
-        smalldrawer.style.display = 'block';
+        smalldrawer.style.display = 'flex';
         allshadow.style.display = 'block';
     });
 
