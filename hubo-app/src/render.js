@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const omnibox = document.getElementById('omnibox');
-    const results = document.getElementById('omni-results');
+    const resultscontainer = document.getElementById('results-container');
     const closebtn = document.getElementById('close-btn');
     const belowmain = document.getElementById('below-main');
     const smallshadow = document.getElementById('small-drawer-shadow-btn');
@@ -8,6 +8,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const allshadow = document.getElementById('all-apps-shadow-btn');
     const allbtn = document.getElementById('all-apps-btn');
     const allapps = document.getElementById('all-apps');
+    
+    resultscontainer.addEventListener('click', (event) => {
+        if (event.target.classList.contains('result')) {
+            console.log('clicked result', event.target.id);
+            window.preload.appTrigger(event.target.id);
+        }
+    });
 
     omnibox.addEventListener('input', async () => {
         const apps = await window.preload.updateSearch(omnibox.value);
@@ -16,11 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const hubo = document.getElementById('hubo');
         hubo.textContent = `Hub${'o'.repeat(length)}`;
 
-        results.innerHTML = null;
+        resultscontainer.innerHTML = '';
         apps.forEach(app => {
-            results.innerHTML = results.innerHTML.concat(
-                `<div id="${app.id}" class="result">${app.name}</div>`
-            );
+            resultscontainer.innerHTML += `<div id="${app.id}" class="result">${app.name}</div>`
         });
     });
 

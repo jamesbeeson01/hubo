@@ -63,12 +63,32 @@ ipcMain.handle('update-search', (event, text) => {
     console.log('No input');
     return [];
   } 
-  else if(0 < text.length & text.length < appRegistry.length) {
+  else if(0 < text.length & text.length <= appRegistry.length) {
     console.log(appRegistry[text.length - 1].name);
-    return appRegistry.slice(0, text.length);
+    return appRegistry.slice(0, text.length).map(app => ({
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      icon: app.icon
+    }));
   } 
   else {
     console.log('No app found at index.');
-    return appRegistry;
+    return appRegistry.map(app => ({
+      id: app.id,
+      name: app.name,
+      description: app.description,
+      icon: app.icon
+    }));;
+  }
+});
+
+ipcMain.handle('app-trigger', (event, id) => {
+  const app = appRegistry.find(app => app.id === id);
+  if (app) {
+    console.log(`Triggering app: ${app.name}`);
+    app.call();
+  } else {
+    console.log(`App with id '${id}' not found`);
   }
 });

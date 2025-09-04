@@ -11,8 +11,8 @@ Personal hub home for connecting personalized desktop apps and features
     - [x] Send to updateSearch
         - [x] Update Hubo text to a count or add an o every time (temporary)
         - [x] Make the count read in the index of app registry
-        - [ ] Make entries a button that performs the action
-    - [ ] Implement UI (populating beneath omnibox)
+        - [x] Make entries a button that performs the action
+    - [x] Implement UI (populating beneath omnibox)
     - [ ] Implement app cards (with a default if no icon)
 - [ ] Add help-info window
 - [ ] Shortcuts (defined in ui-ux doc)
@@ -29,9 +29,8 @@ Personal hub home for connecting personalized desktop apps and features
     - [ ] Dynamic backend addition
     - [ ] Adding and sizing to frontend
 - [ ] Make the apps searchable
-- [ ] Implement search UI
-    - [ ] Have it add or remove elements based on number characters in input
 - [ ] Implement search function
 - [ ] Connect input to AI chat (show in backend terminal)
 - [ ] Create chat UI (loren ipsum on enter)
 - [ ] Build first app
+- [ ] Track app recency
