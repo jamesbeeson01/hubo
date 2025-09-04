@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const omnibox = document.getElementById('omnibox');
+    const results = document.getElementById('omni-results');
     const closebtn = document.getElementById('close-btn');
     const belowmain = document.getElementById('below-main');
     const smallshadow = document.getElementById('small-drawer-shadow-btn');
@@ -9,8 +10,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const allapps = document.getElementById('all-apps');
 
     omnibox.addEventListener('input', async () => {
-        const len = await window.preload.updateSearch(omnibox.value);
-        console.log(len);
+        const apps = await window.preload.updateSearch(omnibox.value);
+        const length = apps.length;
+        
+        const hubo = document.getElementById('hubo');
+        hubo.textContent = `Hub${'o'.repeat(length)}`;
+
+        results.innerHTML = null;
+        apps.forEach(app => {
+            results.innerHTML = results.innerHTML.concat(
+                `<div id="${app.id}" class="result">${app.name}</div>`
+            );
+        });
     });
 
     closebtn.addEventListener('click', () => {
