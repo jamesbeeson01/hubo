@@ -90,3 +90,6 @@ typings/
 
 # Electron-Forge
 out/
+
+# Workspace
+*.code-Workspace
