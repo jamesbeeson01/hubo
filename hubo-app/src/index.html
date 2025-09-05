@@ -16,34 +16,34 @@
         <span class="material-symbols-outlined">crop_square</span>
         <span class="material-symbols-outlined">filter_none</span>
         <span class="material-symbols-outlined">auto_awesome_motion</span> -->
-        <span id="close-btn" class="material-symbols-outlined">cancel</span>
-        <span id="all-apps-btn" class="material-symbols-outlined">tab_inactive</span>
+        <span id="close-btn" class="material-symbols-outlined clickable">cancel</span>
+        <span id="all-apps-btn" class="material-symbols-outlined clickable">tab_inactive</span>
         <!-- <span class="material-icons">cancel</span> -->
       </div>
       <div id="main">
         <h1 id="hubo">Hubo</h1>
         <div id="omni">
-          <p id="omnibox-buttons" class="fade">Some icons</p>
+          <p id="omnibox-buttons" class="fade clickable">Some icons</p>
           <input type="text" id="omnibox" name="omnibox" placeholder="Search or Chat..."> <!--spellcheck and autocomplete are options-->
-          <div id="results-container"></div>
+          <div id="results-container" class="clickable"></div>
         </div>
       </div>
     </div>
     <div id="below-main">
-      <div id="small-drawer-shadow-btn" class="shadow fade behind-previous">Down arrow icon</div>
-      <div id="small-drawer" class="panel behind-previous">
+      <div id="small-drawer-shadow-btn" class="shadow fade clickable">Down arrow icon</div>
+      <div id="small-drawer" class="panel">
         <!-- significant top padding or align to bottom -->
         <!-- four apps in a row -->
         Four apps
       </div>
-      <div id="all-apps-shadow-btn" class="shadow fade behind-previous">More...</div>
+      <div id="all-apps-shadow-btn" class="shadow fade clickable">More...</div>
     </div>
     <div id="all-apps" class="panel">
-      All the apps, show on top
+      <div id="all-apps-container"></div>
     </div>
-    <!-- <div id="help-info" class="panel">
+    <div id="help-info" class="panel">
       Some text for shortcuts and stuff
-    </div> -->
+    </div>
     <script src="render.js"></script>
   </body>
 </html>

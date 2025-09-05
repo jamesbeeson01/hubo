@@ -6,7 +6,7 @@ Personal hub home for connecting personalized desktop apps and features
 
 - [x] Place drawers in the correct positions
 - [x] Drawers reset when cursor leaves
-- [ ] Apping
+- [x] Apping
     - [x] Listen for input key events
     - [x] Send to updateSearch
         - [x] Update Hubo text to a count or add an o every time (temporary)
@@ -14,13 +14,18 @@ Personal hub home for connecting personalized desktop apps and features
         - [x] Make entries a button that performs the action
     - [x] Implement UI (populating beneath omnibox)
     - [x] Style app cards (with a default if no icon)
-    - [ ] Place app cards in drawer
-    - [ ] Place app cards in all-apps
-    - [ ] Dynamically add app cards
-        - [ ] getApps that accepts indices
-    - [ ] Click triggers action
-- [ ] Add help-info window
+    - [x] Place app cards in drawer
+    - [x] Place app cards in all-apps
+    - [x] Dynamically add app cards
+    - [x] Click triggers action
+- [x] Add help-info window
 - [ ] Shortcuts (defined in ui-ux doc)
+    - [x] ctrl+alt+H
+    - [ ] escape
+    - [ ] ctrl+enter
+    - [x] ctrl+K
+    - [ ] enter
+    - [ ] up and down
 - [ ] Style elements
     - [ ] Hover behavior for icons (color and cursor)
     - [ ] Main centering and location
@@ -29,10 +34,7 @@ Personal hub home for connecting personalized desktop apps and features
     - [ ] Down arrow icon
     - [ ] Give drawers animations
     - [ ] Auto window sizing
-- [ ] Implement apps structure
-    - [ ] App UI element
-    - [ ] Dynamic backend addition
-    - [ ] Adding and sizing to frontend
+    - [ ] Fix all apps spacing
 - [ ] Make the apps searchable
 - [ ] Implement search function
 - [ ] Connect input to AI chat (show in backend terminal)

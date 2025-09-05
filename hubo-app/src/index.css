@@ -64,6 +64,7 @@ body {
   border: none;
   border-bottom: 2px solid var(--highlight-color);
   background: transparent;
+  outline: none;
 }
 
 #results-container {
@@ -105,7 +106,32 @@ body {
   right: 0;
   height: 22rem;
   
-  /* transform: translateZ(100px); */
+  /* Grid Layout */
+  /* display: grid; */
+  /* grid-template-columns: repeat(4, 1fr); /* Creates 4 equal-width columns */
+  /* place-items: center; */
+  /* gap: 2px; Sets equal 16px spacing for rows and columns */
+  
+}
+
+#all-apps-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 34px;
+}
+
+#help-info {
+  display: none;
+  position: fixed;
+  background-color: var(--tertiary-color);
+  color: white;
+  opacity: 90%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 22rem;
 }
 
 .app {
@@ -145,7 +171,10 @@ body {
   transition: opacity 0.3s;
 }
 
-/* .behind-previous {
-  padding-top: calc(var(--panel-padding) + 1rem);
-  margin-top: -1rem;
-} */
+.clickable:hover {
+  cursor: default;
+}
+
+.result:hover {
+  background-color: var(--secondary-color);
+}

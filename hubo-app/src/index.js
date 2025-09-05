@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain } = require('electron');
+const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
 const { appRegistry, smallDrawerApps } = require('../apps/registry.js');
 
@@ -25,10 +25,7 @@ const createWindow = () => {
   // Open the DevTools.
   // mainWindow.webContents.openDevTools();
 
-  // IPC handler for closing the window
-  ipcMain.handle('close-window', () => {
-    mainWindow.close();
-  });
+
 };
 
 // This method will be called when Electron has finished
@@ -36,6 +33,21 @@ const createWindow = () => {
 // Some APIs can only be used after this event occurs.
 app.whenReady().then(() => {
   createWindow();
+
+  globalShortcut.register('Alt+CommandOrControl+H', () => {
+    console.log('ctrl+alt+H event');
+    const win = BrowserWindow.getAllWindows()[0];
+    if (win) {
+      if (!win.isVisible() || !win.isFocused()) {
+        win.show();
+        win.focus();
+      } else {
+        win.close();
+      }
+    } else {
+      createWindow();
+    }
+  });
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
@@ -46,12 +58,19 @@ app.whenReady().then(() => {
   });
 });
 
+// IPC handler for closing the window
+ipcMain.handle('close-window', () => {
+  const win = BrowserWindow.getAllWindows()[0];
+  if (win) win.close();
+});
+
 // Quit when all windows are closed, except on macOS. There, it's common
 // for applications and their menu bar to stay active until the user quits
 // explicitly with Cmd + Q.
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    app.quit();
+    console.log('All windows are closed. Program still running.');
+    // app.quit();
   }
 });
 
@@ -83,17 +102,9 @@ ipcMain.handle('update-search', (event, text) => {
   }
 });
 
-ipcMain.handle('get-apps', () => {
-  return appRegistry.map(app => ({
-      id: app.id,
-      name: app.name,
-      description: app.description,
-      icon: app.icon
-    }));
-});
-
-ipcMain.handle('get-drawer-apps', () => {
-  return appRegistry.slice(0, 4).map(app => ({
+ipcMain.handle('get-apps', (event, small=false) => {
+  const apps = small ? smallDrawerApps : appRegistry;
+  return apps.map(app => ({
       id: app.id,
       name: app.name,
       description: app.description,
@@ -109,4 +120,8 @@ ipcMain.handle('app-trigger', (event, id) => {
   } else {
     console.log(`App with id '${id}' not found`);
   }
+});
+
+ipcMain.handle('back-log', (event, content) => {
+  console.log(content);
 });

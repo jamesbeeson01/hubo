@@ -8,21 +8,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const allshadow = document.getElementById('all-apps-shadow-btn');
     const allbtn = document.getElementById('all-apps-btn');
     const allapps = document.getElementById('all-apps');
+    const allappscontainer = document.getElementById('all-apps-container');
+    const helpinfo = document.getElementById('help-info');
 
-    // phase 1
-    smalldrawer.innerHTML = '<div class="app"><p>A</p></div>'.repeat(4);
-    // phase 2
-    // const drawerapps = await window.preload.getApps();
-    // smalldrawer.innerHTML = '<div class="app"><p>A</p></div>'.repeat(apps.length);
-    // phase 3
-    // const drawerapps = window.preload.getApps();
-    // smalldrawer.innerHTML = '';
-    // drawerapps.forEach(app => {
-    //     smalldrawer.innerHTML += `<div id="${app.id}" class="app">${app.name[0]}</div>`
-    // });
+    async function fillApps(container, small=false) {
+        let apps = await window.preload.getApps(small);
+
+        container.innerHTML = '';
+        apps.forEach(app => {
+            container.innerHTML += `<div id="${app.id}" class="app clickable">${app.name.charAt(0)}</div>`
+        });
+    }
+
+    fillApps(smalldrawer, small=true);
+    fillApps(allappscontainer);
     
     resultscontainer.addEventListener('click', (event) => {
         if (event.target.classList.contains('result')) {
+            console.log('clicked result', event.target.id);
+            window.preload.appTrigger(event.target.id);
+        }
+    });
+
+    document.body.addEventListener('click', (event) => {
+        if (event.target.classList.contains('app')) {
             console.log('clicked result', event.target.id);
             window.preload.appTrigger(event.target.id);
         }
@@ -79,4 +88,52 @@ document.addEventListener('DOMContentLoaded', () => {
     allbtn.addEventListener('click', () => {
         allapps.style.display = 'block';
     });
+
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+            e.preventDefault();
+            if (helpinfo.style.display === 'block') {
+                helpinfo.style.display = 'none';
+            } else {
+                helpinfo.style.display = 'block';
+            }
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+            e.preventDefault();
+            window.preload.backLog('escape pressed');
+            // if (omnibox.focus or omnibox.value) {
+            //   omnibox.value = '';
+            //   omnibox.focus = no
+            // } else {
+            //   close window
+            // }
+            //omnibox.focus);
+            // omnibox.select();
+        }
+    });
+
+    // document.addEventListener('keydown', (e) => {
+    //     if (e.key === 'up or down' && 'omnibox is focused') {
+    //         e.preventDefault();
+    //         // move up and down in the results menu
+    //     }
+    // });
+
+    // document.addEventListener('keydown', (e) => {
+    //     if (e.key === 'Enter' && 'something is selected in the menu') {
+    //         e.preventDefault();
+    //         window.preload.backLog('Enter pressed');
+    //         // run the app
+    //     }
+    // });
+
+    // document.addEventListener('keydown', (e) => {
+    //     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && omnibox.value) {
+    //         e.preventDefault();
+    //         // send input to default AI
+    //     }
+    // });
 });

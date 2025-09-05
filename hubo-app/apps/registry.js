@@ -28,6 +28,20 @@ export const appRegistry = [
         description: 'Just a Hello World!',
         icon: '../icons/hello_world.png',
         call: () => console.log('Hello World!')
+    },
+    {
+        id: 'goodbyeworld',
+        name: 'Goodbye World!',
+        description: 'A twist on Hello World!',
+        icon: '../icons/hello_world.png',
+        call: () => console.log('Goodbye World!')
+    },
+    {
+        id: 'another',
+        name: 'Another',
+        description: 'Another mock app',
+        icon: '../icons/another.png',
+        call: () => console.log('Another')
     }
 ];
 
