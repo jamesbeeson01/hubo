@@ -7,7 +7,7 @@ const ai = new GoogleGenAI({ apikey: API_KEY });
 export async function noMemory(prompt) {
     try {
         const result = await ai.models.generateContent({
-            // model: 'gemini-2.0-flash-lite',
+            model: 'gemini-2.0-flash-lite',
             contents: prompt
         });
 
