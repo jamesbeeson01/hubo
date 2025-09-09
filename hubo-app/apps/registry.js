@@ -1,4 +1,8 @@
 import { noMemory } from "./default_ai.mjs";
+import { arnoldSchwarzenegger } from "./arnold_schwarzenegger.mjs";
+import { selfAssess } from "./self_assess.mjs";
+import { clarify } from "./clarify.mjs";
+import { tone } from "./tone.mjs";
 
 
 export const appRegistry = [
@@ -11,44 +15,44 @@ export const appRegistry = [
         call: (prompt) => noMemory(prompt)
     },
     {
-        id: 'helloworld2',
-        name: 'Hello World2!',
-        description: 'Just a Hello World!',
-        type: 'app',
+        id: 'arnold_schwarzenegger',
+        name: 'Arnold Schwarzenegger',
+        description: 'Simple header. Talks like Arnold Schwarzenegger',
+        type: 'ai',
         icon: '../icons/hello_world.png',
-        call: () => console.log('Hello World!')
+        call: (prompt) => arnoldSchwarzenegger(prompt)
     },
     {
-        id: 'helloworld3',
-        name: 'Hello World3!',
-        description: 'Just a Hello World!',
-        type: 'app',
+        id: 'self_assess',
+        name: 'Self Assess',
+        description: 'Chain that assesses response and responds again',
+        type: 'ai',
         icon: '../icons/hello_world.png',
-        call: () => console.log('Hello World!')
+        call: (prompt) => selfAssess(prompt)
     },
     {
-        id: 'helloworld4',
-        name: 'Hello World4!',
-        description: 'Just a Hello World!',
-        type: 'app',
+        id: 'clarify',
+        name: 'Clarify',
+        description: 'Router that either responds normally or asks for clarification',
+        type: 'ai',
         icon: '../icons/hello_world.png',
-        call: () => console.log('Hello World!')
+        call: (prompt) => clarify(prompt)
     },
     {
-        id: 'goodbyeworld',
-        name: 'Goodbye World!',
-        description: 'A twist on Hello World!',
-        type: 'app',
+        id: 'tone',
+        name: 'Tone',
+        description: 'Function caller determines temperature it should respond with',
+        type: 'ai',
         icon: '../icons/hello_world.png',
-        call: () => console.log('Goodbye World!')
+        call: () => tone()
     },
     {
-        id: 'another',
-        name: 'Another',
-        description: 'Another mock app',
+        id: 'icon_maker',
+        name: 'Icon Maker',
+        description: 'Creates an icon using AI, sizes it appropriately, and places it in the icons folder',
         type: 'app',
         icon: '../icons/another.png',
-        call: () => console.log('Another')
+        call: () => console.log('Icon Maker not yet implemented')
     }
 ];
 

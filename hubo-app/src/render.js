@@ -145,6 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             window.preload.backLog('ctrl+enter');
             window.preload.appTrigger('nomemory', omnibox.value);
+            omnibox.value = '';
             // send input to default AI
         }
     });
