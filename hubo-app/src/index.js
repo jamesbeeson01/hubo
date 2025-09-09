@@ -112,11 +112,14 @@ ipcMain.handle('get-apps', (event, small=false) => {
     }));
 });
 
-ipcMain.handle('app-trigger', (event, id) => {
+ipcMain.handle('app-trigger', (event, id, text) => {
   const app = appRegistry.find(app => app.id === id);
   if (app) {
     console.log(`Triggering app: ${app.name}`);
-    app.call();
+    console.log(`text: ${text}`);
+    app.call(text); // Sends text whether the function accepts it or not
+    // If you need, you can check how many parameters need to be passed
+    // app.call.length
   } else {
     console.log(`App with id '${id}' not found`);
   }

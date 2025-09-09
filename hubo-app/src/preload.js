@@ -6,7 +6,7 @@ const API = {
   closeWindow: () => ipcRenderer.invoke('close-window'),
   getApps: (small=false) => ipcRenderer.invoke('get-apps', small),
   getDrawerApps: () => ipcRenderer.invoke('get-drawer-apps'),
-  appTrigger: (id) => ipcRenderer.invoke('app-trigger', id),
+  appTrigger: (id, text) => ipcRenderer.invoke('app-trigger', id, text),
   updateSearch: (text) => ipcRenderer.invoke('update-search', text),
   backLog: (content) => ipcRenderer.invoke('back-log', content)
 }

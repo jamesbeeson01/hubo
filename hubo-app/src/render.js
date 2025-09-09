@@ -26,14 +26,16 @@ document.addEventListener('DOMContentLoaded', () => {
     resultscontainer.addEventListener('click', (event) => {
         if (event.target.classList.contains('result')) {
             console.log('clicked result', event.target.id);
-            window.preload.appTrigger(event.target.id);
+            const text = omnibox.value || 'hi';
+            window.preload.appTrigger(event.target.id, text);
         }
     });
 
     document.body.addEventListener('click', (event) => {
         if (event.target.classList.contains('app')) {
             console.log('clicked result', event.target.id);
-            window.preload.appTrigger(event.target.id);
+            const text = omnibox.value || 'hi';
+            window.preload.appTrigger(event.target.id, text);
         }
     });
 
@@ -48,6 +50,8 @@ document.addEventListener('DOMContentLoaded', () => {
         apps.forEach(app => {
             resultscontainer.innerHTML += `<div id="${app.id}" class="result">${app.name}</div>`
         });
+
+        if (!omnibox.value) omnibox.blur();
     });
 
     closebtn.addEventListener('click', () => {
@@ -89,6 +93,7 @@ document.addEventListener('DOMContentLoaded', () => {
         allapps.style.display = 'block';
     });
 
+    // ctrl + k
     document.addEventListener('keydown', (e) => {
         if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
             e.preventDefault();
@@ -100,16 +105,21 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    // Escape
+    // If there is omnibox input, clear it, close the results
+    // Otherwise, close the window
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             e.preventDefault();
             window.preload.backLog('escape pressed');
-            // if (omnibox.focus or omnibox.value) {
-            //   omnibox.value = '';
-            //   omnibox.focus = no
-            // } else {
-            //   close window
-            // }
+            if (omnibox.value) {
+                omnibox.value = '';
+                resultscontainer.innerHTML = '';
+                omnibox.blur();
+              // clear results
+            } else {
+              window.preload.closeWindow();
+            }
             //omnibox.focus);
             // omnibox.select();
         }
@@ -130,10 +140,25 @@ document.addEventListener('DOMContentLoaded', () => {
     //     }
     // });
 
-    // document.addEventListener('keydown', (e) => {
-    //     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && omnibox.value) {
-    //         e.preventDefault();
-    //         // send input to default AI
-    //     }
-    // });
+    document.addEventListener('keydown', (e) => {
+        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && omnibox.value) {
+            e.preventDefault();
+            window.preload.backLog('ctrl+enter');
+            window.preload.appTrigger('nomemory', omnibox.value);
+            // send input to default AI
+        }
+    });
+
+    // Handle standard input characters (like "H", "`", etc.)
+    document.addEventListener('keydown', (e) => {
+        // Check if it's a standard printable character (not a shortcut or special key)
+        if (e.key.length === 1 && !e.ctrlKey && !e.metaKey && !e.altKey) {
+            // Focus omnibox if it's not already focused
+            if (document.activeElement !== omnibox) {
+                omnibox.input = '';
+                omnibox.focus();
+            }
+        }
+    });
+
 });
