@@ -19,7 +19,7 @@ Personal hub home for connecting personalized desktop apps and features
     - [x] Dynamically add app cards
     - [x] Click triggers action
 - [x] Add help-info window
-- [ ] Shortcuts (defined in ui-ux doc)
+- [ ] Shortcuts
     - [x] ctrl+alt+H
     - [ ] escape
     - [ ] ctrl+enter
