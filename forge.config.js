@@ -4,6 +4,8 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 module.exports = {
   packagerConfig: {
     asar: true,
+    // Packager ignores .gitignore; keep agent tooling (symlinked skills) out of the app.
+    ignore: [/^\/\.agents($|\/)/, /^\/\.claude($|\/)/],
   },
   rebuildConfig: {},
   makers: [
