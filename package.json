@@ -1,6 +1,6 @@
 {
-  "name": "hubo-app",
-  "productName": "hubo-app",
+  "name": "hubo",
+  "productName": "hubo",
   "version": "1.0.1",
   "description": "My Electron application description",
   "main": "src/index.js",

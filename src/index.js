@@ -12,7 +12,7 @@ if (require('electron-squirrel-startup')) {
 const isDev = !app.isPackaged;
 const toggleShortcut = isDev ? 'Alt+Shift+CommandOrControl+H' : 'Alt+CommandOrControl+H';
 if (isDev) {
-  app.setName('hubo-app-dev');
+  app.setName('hubo-dev');
 }
 
 const createWindow = () => {
