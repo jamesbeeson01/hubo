@@ -7,6 +7,14 @@ if (require('electron-squirrel-startup')) {
   app.quit();
 }
 
+// The installed (stable) app and `npm start` (dev) can run side by side,
+// so dev gets its own global shortcut and its own user data folder.
+const isDev = !app.isPackaged;
+const toggleShortcut = isDev ? 'Alt+Shift+CommandOrControl+H' : 'Alt+CommandOrControl+H';
+if (isDev) {
+  app.setName('hubo-app-dev');
+}
+
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -34,8 +42,8 @@ const createWindow = () => {
 app.whenReady().then(() => {
   createWindow();
 
-  globalShortcut.register('Alt+CommandOrControl+H', () => {
-    console.log('ctrl+alt+H event');
+  const registered = globalShortcut.register(toggleShortcut, () => {
+    console.log(`${toggleShortcut} event`);
     const win = BrowserWindow.getAllWindows()[0];
     if (win) {
       if (!win.isVisible() || !win.isFocused()) {
@@ -48,6 +56,9 @@ app.whenReady().then(() => {
       createWindow();
     }
   });
+  if (!registered) {
+    console.log(`Could not register ${toggleShortcut} (another app may be using it)`);
+  }
 
   // On OS X it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
