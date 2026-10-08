@@ -65,6 +65,9 @@ export const appRegistry = [
     }
 ];
 
+// The AI that receives prompts by default. Change this id to pin a different AI.
+export const PINNED_AI_ID = 'nomemory';
+
 export const smallDrawerApps = appRegistry.slice(0, 4);
 
 // export function defaultAICall(prompt) { appRegistry[0].call };

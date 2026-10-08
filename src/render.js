@@ -38,13 +38,54 @@ document.addEventListener('DOMContentLoaded', () => {
     fillApps(smalldrawer, small=true);
     fillApps(allappscontainer);
     
+    // Results state: what mode the text was read as, and which row Enter/click will run.
+    let mode = 'none';
+    let results = [];
+    let highlighted = 0;
+
+    function renderResults() {
+        resultscontainer.innerHTML = '';
+        results.forEach((app, i) => {
+            const row = document.createElement('div');
+            row.className = 'result' + (i === highlighted ? ' highlighted' : '');
+            row.dataset.index = i;
+            row.textContent = app.name;
+            resultscontainer.appendChild(row);
+        });
+    }
+
+    function setTitle(length) {
+        document.getElementById('hubo').textContent = `Hub${'o'.repeat(Math.min(length + 1, 7))}`;
+    }
+
+    function clearOmnibox() {
+        omnibox.value = '';
+        mode = 'none';
+        results = [];
+        highlighted = 0;
+        renderResults();
+        setTitle(0);
+    }
+
+    // Enter and click both land here: open mode launches the app, prompt mode sends the text to it.
+    function runResult(index) {
+        const app = results[index];
+        if (!app) return;
+        const text = mode === 'prompt' ? omnibox.value : '';
+        clearOmnibox();
+        triggerApp(app.id, text);
+    }
+
+    // Keep focus in the omnibox when a row is pressed so the list doesn't hide before the click lands.
+    resultscontainer.addEventListener('mousedown', (event) => event.preventDefault());
+
     resultscontainer.addEventListener('click', (event) => {
-        if (event.target.classList.contains('result')) {
-            console.log('clicked result', event.target.id);
-            const text = omnibox.value || 'hi';
-            triggerApp(event.target.id, text);
-        }
+        const row = event.target.closest('.result');
+        if (row) runResult(Number(row.dataset.index));
     });
+
+    omnibox.addEventListener('focus', () => resultscontainer.classList.remove('hidden'));
+    omnibox.addEventListener('blur', () => resultscontainer.classList.add('hidden'));
 
     document.body.addEventListener('click', (event) => {
         if (event.target.classList.contains('app')) {
@@ -55,16 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     omnibox.addEventListener('input', async () => {
-        const apps = await window.preload.updateSearch(omnibox.value);
-        const length = apps.length;
-        
-        const hubo = document.getElementById('hubo');
-        hubo.textContent = `Hub${'o'.repeat(length)}`;
-
-        resultscontainer.innerHTML = '';
-        apps.forEach(app => {
-            resultscontainer.innerHTML += `<div id="${app.id}" class="result">${app.name}</div>`
-        });
+        const text = omnibox.value;
+        setTitle(text.length);
+        const found = await window.preload.updateSearch(text);
+        if (omnibox.value !== text) return; // a newer keystroke superseded this lookup
+        mode = found.mode;
+        results = found.results;
+        highlighted = 0;
+        renderResults();
 
         if (!omnibox.value) omnibox.blur();
     });
@@ -120,48 +159,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Escape
-    // If there is omnibox input, clear it, close the results
-    // Otherwise, close the window
+    // Escape goes back one layer: hide the results (blur), then clear the text, then close the window
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             e.preventDefault();
-            window.preload.backLog('escape pressed');
-            if (omnibox.value) {
-                omnibox.value = '';
-                resultscontainer.innerHTML = '';
+            if (omnibox.value && document.activeElement === omnibox) {
                 omnibox.blur();
-              // clear results
+            } else if (omnibox.value) {
+                clearOmnibox();
             } else {
-              window.preload.closeWindow();
+                window.preload.closeWindow();
             }
-            //omnibox.focus);
-            // omnibox.select();
         }
     });
 
-    // document.addEventListener('keydown', (e) => {
-    //     if (e.key === 'up or down' && 'omnibox is focused') {
-    //         e.preventDefault();
-    //         // move up and down in the results menu
-    //     }
-    // });
-
-    // document.addEventListener('keydown', (e) => {
-    //     if (e.key === 'Enter' && 'something is selected in the menu') {
-    //         e.preventDefault();
-    //         window.preload.backLog('Enter pressed');
-    //         // run the app
-    //     }
-    // });
-
-    document.addEventListener('keydown', (e) => {
-        if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && omnibox.value) {
+    // Up/Down move the highlight, Enter runs it
+    omnibox.addEventListener('keydown', (e) => {
+        if (!results.length) return;
+        if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
             e.preventDefault();
-            window.preload.backLog('ctrl+enter');
-            window.preload.appTrigger('nomemory', omnibox.value);
-            omnibox.value = '';
-            // send input to default AI
+            const step = e.key === 'ArrowDown' ? 1 : -1;
+            highlighted = (highlighted + step + results.length) % results.length;
+            renderResults();
+        } else if (e.key === 'Enter') {
+            e.preventDefault();
+            runResult(highlighted);
         }
     });
 

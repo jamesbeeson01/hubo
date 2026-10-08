@@ -1,6 +1,7 @@
 const { app, BrowserWindow, ipcMain, globalShortcut } = require('electron');
 const path = require('node:path');
-const { appRegistry, smallDrawerApps } = require('../apps/registry.js');
+const { appRegistry, smallDrawerApps, PINNED_AI_ID } = require('../apps/registry.js');
+const { search } = require('../apps/search.js');
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -88,29 +89,16 @@ app.on('window-all-closed', () => {
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
 ipcMain.handle('update-search', (event, text) => {
-  const i = text.length - 1;
-  if(text.length == 0) {
-    console.log('No input');
-    return [];
-  } 
-  else if(0 < text.length & text.length <= appRegistry.length) {
-    console.log(appRegistry[text.length - 1].name);
-    return appRegistry.slice(0, text.length).map(app => ({
+  const { mode, results } = search(appRegistry, PINNED_AI_ID, text);
+  return {
+    mode,
+    results: results.map(app => ({
       id: app.id,
       name: app.name,
       description: app.description,
       icon: app.icon
-    }));
-  } 
-  else {
-    console.log('No app found at index.');
-    return appRegistry.map(app => ({
-      id: app.id,
-      name: app.name,
-      description: app.description,
-      icon: app.icon
-    }));;
-  }
+    }))
+  };
 });
 
 ipcMain.handle('get-apps', (event, small=false) => {

@@ -93,6 +93,10 @@ body {
   outline: none;
 }
 
+#results-container.hidden {
+  display: none;
+}
+
 #results-container {
   position: absolute;
   top: 100%;
@@ -201,6 +205,7 @@ body {
   cursor: default;
 }
 
+.result.highlighted,
 .result:hover {
   background-color: var(--secondary-color);
 }
