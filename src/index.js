@@ -128,9 +128,11 @@ ipcMain.handle('app-trigger', (event, id, text) => {
   if (app) {
     console.log(`Triggering app: ${app.name}`);
     console.log(`text: ${text}`);
-    app.call(text); // Sends text whether the function accepts it or not
+    // Sends text whether the function accepts it or not
     // If you need, you can check how many parameters need to be passed
     // app.call.length
+    // An app may return { message } to have it shown briefly in the window.
+    return app.call(text);
   } else {
     console.log(`App with id '${id}' not found`);
   }

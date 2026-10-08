@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Break</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Comfortaa:300&display=swap" />
+    <link rel="stylesheet" href="index.css" />
+    <style>
+      html, body {
+        height: 100%;
+      }
+      body {
+        max-width: none;
+        margin: 0;
+        overflow: hidden;
+        background: var(--primary-color);
+        user-select: none;
+        cursor: default;
+        transition: opacity 0.3s;
+      }
+      body.leaving {
+        opacity: 0;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        body { transition: none; }
+      }
+
+      /* Barely there: the theme's text color at low opacity */
+      .faint {
+        color: var(--text-color);
+        opacity: 0.18;
+      }
+
+      #clock {
+        position: fixed;
+        bottom: 3rem;
+        left: 0;
+        right: 0;
+        font-size: 1.1rem;
+        letter-spacing: 0.1em;
+      }
+
+      #quit {
+        position: fixed;
+        top: 1.5rem;
+        right: 2rem;
+        font: inherit;
+        font-size: 1.05rem;
+        padding: 0.5rem 1.4rem;
+        border: 1px solid currentColor;
+        border-radius: 999px;
+        background: transparent;
+        cursor: pointer;
+        transition: opacity 0.3s;
+      }
+      #quit:hover, #quit:focus-visible {
+        opacity: 0.6;
+        outline: none;
+      }
+
+      /* Secondary monitors are just a dark cover */
+      body.mirror #quit,
+      body.mirror #clock {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <button id="quit" class="faint">Quit</button>
+    <div id="clock" class="faint"></div>
+
+    <script>
+      const params = new URLSearchParams(location.search);
+      const body = document.body;
+      const clock = document.getElementById('clock');
+      const quit = document.getElementById('quit');
+
+      if (params.get('role') === 'mirror') {
+        body.classList.add('mirror');
+      } else {
+        const format = (s) => `${Math.floor(s / 60)}:${String(s % 60).padStart(2, '0')}`;
+
+        let finished = false;
+        function finish() {
+          if (finished) return;
+          finished = true;
+          body.classList.add('leaving');
+          if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            window.breakOverlay.done();
+          } else {
+            body.addEventListener('transitionend', window.breakOverlay.done, { once: true });
+          }
+        }
+
+        let left = Number(params.get('seconds'));
+        clock.textContent = format(left);
+        const tick = setInterval(() => {
+          left -= 1;
+          clock.textContent = format(left);
+          if (left <= 0) {
+            clearInterval(tick);
+            // Don't vanish under a pointer resting on Quit, or the next click lands on whatever is behind.
+            if (quit.matches(':hover')) {
+              quit.addEventListener('mouseleave', finish, { once: true });
+            } else {
+              finish();
+            }
+          }
+        }, 1000);
+
+        quit.addEventListener('click', window.breakOverlay.quit);
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape') finish();
+        });
+      }
+    </script>
+  </body>
+</html>

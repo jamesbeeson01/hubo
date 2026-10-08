@@ -93,3 +93,8 @@ out/
 
 # Workspace
 *.code-Workspace
+
+# skills
+.agents
+.claude
+skills-lock.json

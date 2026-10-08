@@ -3,6 +3,7 @@ import { arnoldSchwarzenegger } from "./arnold_schwarzenegger.mjs";
 import { selfAssess } from "./self_assess.mjs";
 import { clarify } from "./clarify.mjs";
 import { tone } from "./tone.mjs";
+import { twentyTwentyTwenty } from "./twenty_twenty_twenty.mjs";
 
 
 export const appRegistry = [
@@ -45,6 +46,14 @@ export const appRegistry = [
         type: 'ai',
         icon: '../icons/hello_world.png',
         call: () => tone()
+    },
+    {
+        id: 'twenty_twenty_twenty',
+        name: '20-20-20',
+        description: 'Every 20 minutes, covers the screen for 20 seconds so you look away. Click again to turn off',
+        type: 'app',
+        icon: '../icons/hello_world.png',
+        call: () => twentyTwentyTwenty()
     },
     {
         id: 'icon_maker',

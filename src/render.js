@@ -20,6 +20,21 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    const toast = document.getElementById('toast');
+    let toastTimer;
+
+    function showToast(message) {
+        toast.textContent = message;
+        toast.classList.add('show');
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove('show'), 1500);
+    }
+
+    async function triggerApp(id, text) {
+        const result = await window.preload.appTrigger(id, text);
+        if (result && result.message) showToast(result.message);
+    }
+
     fillApps(smalldrawer, small=true);
     fillApps(allappscontainer);
     
@@ -27,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('result')) {
             console.log('clicked result', event.target.id);
             const text = omnibox.value || 'hi';
-            window.preload.appTrigger(event.target.id, text);
+            triggerApp(event.target.id, text);
         }
     });
 
@@ -35,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (event.target.classList.contains('app')) {
             console.log('clicked result', event.target.id);
             const text = omnibox.value || 'hi';
-            window.preload.appTrigger(event.target.id, text);
+            triggerApp(event.target.id, text);
         }
     });
 
